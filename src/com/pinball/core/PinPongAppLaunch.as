@@ -4,6 +4,7 @@
 package com.pinball.core
 {
 	import com.pinball.core.configs.GameConfig;
+	import com.pinball.data.GameStatics;
 
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -43,17 +44,12 @@ package com.pinball.core
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 
-			var stageWidth:Number = int(stage.stageWidth);
-			var stageHeight:Number = int(stage.stageHeight);
+			GameStatics.GAME_WIDTH = stage.stageWidth;
+			GameStatics.GAME_HEIGHT = stage.stageHeight;
 
-			var viewPort:Rectangle = RectangleUtil.fit(
-					new Rectangle(0, 0, stageWidth, stageHeight),
-					new Rectangle(0, 0, stage.stageWidth, stage.stageHeight),
-					ScaleMode.SHOW_ALL, false);
-
-			_starling = new Starling(PingPongGameCore, stage, viewPort, null, "auto", "auto");
-			_starling.stage.stageWidth  = stageWidth;
-			_starling.stage.stageHeight = stageHeight;
+			_starling = new Starling(PingPongGameCore, stage);
+			_starling.stage.stageWidth  = GameStatics.GAME_WIDTH;
+			_starling.stage.stageHeight = GameStatics.GAME_HEIGHT;
 			_starling.enableErrorChecking = false;
 			_starling.simulateMultitouch = false;
 			_starling.showStats = true;

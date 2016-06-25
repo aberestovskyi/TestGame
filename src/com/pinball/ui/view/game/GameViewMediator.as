@@ -3,7 +3,7 @@
  */
 package com.pinball.ui.view.game
 {
-	import com.pinball.ui.controls.Ball;
+	import flash.utils.setTimeout;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
@@ -22,12 +22,8 @@ package com.pinball.ui.view.game
 		{
 			super.initialize();
 
-			var ball:Ball = new Ball(10);
-			ball.x = 300;
-			ball.y = 20;
-			view.addChild(ball);
-
-			view.createField(10,15);
+			view.createField(10,10);
+			setTimeout(view.start, 1000);
 		}
 	}
 }

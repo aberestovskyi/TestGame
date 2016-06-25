@@ -21,9 +21,11 @@ package com.pinball.ui.controls
 			addChild(shape);
 		}
 
+
 		public function get radius():Number
 		{
 			return _radius;
 		}
+
 	}
 }
