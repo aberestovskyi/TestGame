@@ -14,6 +14,8 @@ package com.pinball.ui.view.game
 	import com.pinball.ui.view.AbstractView;
 	import com.pinball.utils.Vector2dUtils;
 
+	import flash.filters.GlowFilter;
+
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
@@ -22,6 +24,7 @@ package com.pinball.ui.view.game
 	import starling.animation.IAnimatable;
 	import starling.core.Starling;
 	import starling.display.Image;
+	import starling.text.TextField;
 
 	public class GameView extends AbstractView implements IAnimatable
 	{
@@ -34,6 +37,8 @@ package com.pinball.ui.view.game
 		private var _onGameOverSignal:Signal = new Signal(Boolean);
 		private var _balanceBar:BalanceBar;
 		private var _character:Character;
+		private var _instructTxt:TextField;
+
 		public function GameView()
 		{
 			super();
@@ -50,12 +55,26 @@ package com.pinball.ui.view.game
 			_balanceBar.y = 270;
 			addChild(_balanceBar);
 
+			_instructTxt = new TextField(500, 55, "Click on a RED button to make a BET", "Berlin Sans", 27, 0xFFFFFF);
+			_instructTxt.nativeFilters = [new GlowFilter(0x000, 1, 3, 3, 20, 3)];
+			addChild(_instructTxt);
+
 			_ball = new Ball(10);
 			addChild(_ball);
 		}
 
+
+		override protected function complete():void
+		{
+			super.complete();
+
+			_instructTxt.x = (stage.stageWidth - _instructTxt.width)*.5;
+			_instructTxt.y = stage.stageHeight - _instructTxt.height - 20;
+		}
+
 		public function startGame():void
 		{
+			AppManager.getInstance().assetManager.getSound("shoot_snd").play();
 			_ball.setVelocity(27 + Math.random()*5, -96 - Math.random()*3);
 			Starling.juggler.add(this);
 			Starling.juggler.add(_ball);
@@ -129,9 +148,11 @@ package com.pinball.ui.view.game
 				_character.x = selectedTarget.x + (selectedTarget.itemBounds.width - _character.width)*.5;
 				_character.y = selectedTarget.y;
 				_character.visible = true;
+				_instructTxt.visible = false;
 			}
 			else
 			{
+				_instructTxt.visible = true;
 				_character.changState(0);
 				_character.visible = false;
 			}

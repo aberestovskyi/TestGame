@@ -36,7 +36,7 @@
         <key>dataFormat</key>
         <string>sparrow</string>
         <key>textureFileName</key>
-        <filename></filename>
+        <filename>../assets/texture/spritesheet.atf</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -80,7 +80,7 @@
         <key>textureSubPath</key>
         <string></string>
         <key>textureFormat</key>
-        <enum type="SettingsBase::TextureFormat">png</enum>
+        <enum type="SettingsBase::TextureFormat">atf</enum>
         <key>borderPadding</key>
         <uint>0</uint>
         <key>maxTextureSize</key>
@@ -104,7 +104,7 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
             <key>forceSquared</key>
             <false/>
             <key>maxRects</key>
@@ -141,7 +141,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename></filename>
+                <filename>../assets/texture/spritesheet.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -187,9 +187,23 @@
             <false/>
         </struct>
         <key>individualSpriteSettings</key>
-        <map type="IndividualSpriteSettingsMap"/>
+        <map type="IndividualSpriteSettingsMap">
+            <key type="filename">assets/apple-big.png</key>
+            <key type="filename">assets/ball.png</key>
+            <key type="filename">assets/bg_win_loose.png</key>
+            <key type="filename">assets/char1.png</key>
+            <key type="filename">assets/char2.png</key>
+            <key type="filename">assets/hit_point.png</key>
+            <key type="filename">assets/target_btn.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+            </struct>
+        </map>
         <key>fileList</key>
-        <array/>
+        <array>
+            <filename>assets</filename>
+        </array>
         <key>ignoreFileList</key>
         <array/>
         <key>replaceList</key>

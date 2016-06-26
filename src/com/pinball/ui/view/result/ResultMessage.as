@@ -3,33 +3,57 @@
  */
 package com.pinball.ui.view.result
 {
+	import com.pinball.managers.AppManager;
 	import com.pinball.ui.view.AbstractView;
 	import com.pinball.utils.TimeoutUtils;
 
 	import flash.filters.GlowFilter;
 
+	import org.osflash.signals.Signal;
+
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;
+	import starling.display.Image;
 	import starling.text.TextField;
 
 	public class ResultMessage extends AbstractView
 	{
+		private var _onOutComplete:Signal = new Signal();
+
 		public function ResultMessage(isWin:Boolean)
 		{
 			super();
 
-			var resutl_txt = new TextField(200, 100, "0", "Berlin Sans", 40, 0xFFFFFF);
-			resutl_txt.nativeFilters = [new GlowFilter(0x000, 1, 3, 3, 20, 3)];
-			addChild(resutl_txt);
+			var background:Image = new Image(AppManager.getInstance().assetManager.getTexture("bg_win_loose"));
+			addChild(background);
+
+			var resutlTxt:TextField = new TextField(200, 55, "", "Berlin Sans", 40, 0xFFFFFF);
+			resutlTxt.nativeFilters = [new GlowFilter(0x000, 1, 3, 3, 20, 3)];
+			addChild(resutlTxt);
+
+			var valueTxt:TextField = new TextField(50, 55, "", "Berlin Sans", 40, 0xFFFFFF);
+			valueTxt.nativeFilters = [new GlowFilter(0x000, 1, 3, 3, 20, 3)];
+			valueTxt.y = resutlTxt.height;
+			valueTxt.x = 40;
+			addChild(valueTxt);
+
+			var icon:Image = new Image(AppManager.getInstance().assetManager.getTexture("apple-big"));
+			icon.x = valueTxt.x + valueTxt.width;
+			icon.y = valueTxt.y - 5;
+			addChild(icon);
 
 			if (isWin)
 			{
-				resutl_txt.text = "YOU WIN";
+				resutlTxt.text = "YOU WIN";
+				valueTxt.text = "+1";
+				AppManager.getInstance().assetManager.getSound("win_snd").play();
 			}
 			else
 			{
-				resutl_txt.text = "YOU LOST";
+				resutlTxt.text = "YOU LOST";
+				valueTxt.text = "-1";
+				AppManager.getInstance().assetManager.getSound("lose_snd").play();
 			}
 		}
 
@@ -39,7 +63,7 @@ package com.pinball.ui.view.result
 			super.complete();
 
 			x = (stage.stageWidth - width) * .5;
-			y = (stage.stageHeight - height) * .5;
+			y = (stage.stageHeight - height) * .5 - 30;
 			transitionIn();
 		}
 
@@ -71,13 +95,25 @@ package com.pinball.ui.view.result
 
 		private function onTransitionInComplete():void
 		{
-			TimeoutUtils.addTimeout(transitionOut, 1000);
+			TimeoutUtils.addTimeout(transitionOut, 2000);
 		}
 
 		private function onTransitionOutComplete():void
 		{
+			_onOutComplete.dispatch();
 			parent.removeChild(this);
 		}
 
+		public function get onOutComplete():Signal
+		{
+			return _onOutComplete;
+		}
+
+
+		override public function destroy():void
+		{
+			_onOutComplete.removeAll();
+			super.destroy();
+		}
 	}
 }

@@ -19,10 +19,15 @@ package com.pinball.embed
 
 		[Embed(source="/../assets/fonts/BRLNSB_0.ttf", embedAsCFF="false", fontFamily="Berlin Sans")]
 		private static const DR_Agu:Class;
+		
+		/* MP3 sound */
+		[Embed(source="/../assets/audio/shoot_snd.mp3")]
+		public static const shoot_snd:Class;
 
+		[Embed(source="/../assets/audio/win_snd.mp3")]
+		public static const win_snd:Class;
 
-		/*/!* MP3 sound *!/
-		[Embed(source="/audio/explosion.mp3")]
-		public static const explosion:Class;*/
+		[Embed(source="/../assets/audio/lose_snd.mp3")]
+		public static const lose_snd:Class;
 	}
 }

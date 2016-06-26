@@ -59,17 +59,13 @@ package com.pinball.ui.view.game
 		private function onGameOverHandler(isWin:Boolean):void
 		{
 			var resultMessage:ResultMessage = new ResultMessage(isWin);
+			resultMessage.onOutComplete.addOnce(resetGame);
 			view.addChild(resultMessage);
 
 			if(isWin)
 				playerModel.balance+=playerModel.bet*2;
 
 			view.setBalance(playerModel.balance);
-
-			if(isWin)
-				TimeoutUtils.addTimeout(resetGame, 5000);
-			else
-				TimeoutUtils.addTimeout(resetGame, 2000);
 		}
 
 		private function resetGame():void
