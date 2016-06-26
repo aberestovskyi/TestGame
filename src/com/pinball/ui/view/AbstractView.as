@@ -21,6 +21,18 @@ package com.pinball.ui.view
 			complete();
 		}
 
+		public function set options(value:Object):void
+		{
+			if (value != null)
+			{
+				for (var property:String in value)
+				{
+					if (hasOwnProperty(property))
+						this[property] = value[property];
+				}
+			}
+		}
+
 		private function onRemoveFromStage(event:Event):void
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
@@ -36,6 +48,7 @@ package com.pinball.ui.view
 		{
 
 		}
+
 
 	}
 }

@@ -3,7 +3,7 @@
  */
 package com.pinball.ui.controls
 {
-	import com.pinball.core.AppManager;
+	import com.pinball.managers.AppManager;
 
 	import flash.geom.Rectangle;
 
@@ -14,21 +14,23 @@ package com.pinball.ui.controls
 	{
 		private var _itemBounds:Rectangle;
 		private var _id:int;
+
+		private var _button:Button;
 		public function TargetItem(id:int, width:Number, height:Number)
 		{
 			super();
 			_id = id;
 			_itemBounds = new Rectangle(0,0,width, height);
-			/*var shape:Shape = new Shape();
-			shape.graphics.beginFill(0x00FF00);
-			shape.graphics.drawRect(0,0,width,height);
-			shape.graphics.endFill();
-			addChild(shape);*/
 
-			var button:Button = new Button(AppManager.getInstance().assetManager.getTexture("target_btn"));
-			button.x = (width - button.width) *.5;
-			button.y = (height - button.height) *.5;
-			addChild(button);
+			_button = new Button(AppManager.getInstance().assetManager.getTexture("target_btn"));
+			_button.x = (width - _button.width) *.5;
+			_button.y = (height - _button.height) *.5;
+			addChild(_button);
+		}
+
+		public function get id():int
+		{
+			return _id;
 		}
 
 		public function get itemBounds():Rectangle
@@ -36,11 +38,6 @@ package com.pinball.ui.controls
 			_itemBounds.x = x;
 			_itemBounds.y = y;
 			return _itemBounds;
-		}
-
-		public function get id():int
-		{
-			return _id;
 		}
 	}
 }

@@ -4,7 +4,11 @@
 package com.pinball.ui.view.game
 {
 	import com.pinball.data.GameStatics;
+	import com.pinball.interfaces.IHitObject;
+	import com.pinball.managers.AppManager;
+	import com.pinball.ui.controls.BalanceBar;
 	import com.pinball.ui.controls.Ball;
+	import com.pinball.ui.controls.Character;
 	import com.pinball.ui.controls.HitObject;
 	import com.pinball.ui.controls.TargetItem;
 	import com.pinball.ui.view.AbstractView;
@@ -17,6 +21,7 @@ package com.pinball.ui.view.game
 
 	import starling.animation.IAnimatable;
 	import starling.core.Starling;
+	import starling.display.Image;
 
 	public class GameView extends AbstractView implements IAnimatable
 	{
@@ -26,43 +31,49 @@ package com.pinball.ui.view.game
 		private var _boundsRect:Rectangle;
 		private var _isInField:Boolean;
 
-		private var _onGameOverSignal:Signal = new Signal(int);
+		private var _onGameOverSignal:Signal = new Signal(Boolean);
+		private var _balanceBar:BalanceBar;
+		private var _character:Character;
 		public function GameView()
 		{
 			super();
-		}
 
+			var back:Image = new Image(AppManager.getInstance().assetManager.getTexture("background_img"));
+			addChild(back);
 
-		override protected function complete():void
-		{
-			super.complete();
+			_character = new Character();
+			_character.visible = false;
+			addChild(_character);
+
+			_balanceBar = new BalanceBar();
+			_balanceBar.x = 30;
+			_balanceBar.y = 270;
+			addChild(_balanceBar);
 
 			_ball = new Ball(10);
 			addChild(_ball);
-			resetPositions();
 		}
 
 		public function startGame():void
 		{
-			lockTargets = true;
-			_ball.setVelocity(25 + Math.random()*5, -97 - Math.random()*3);
+			_ball.setVelocity(27 + Math.random()*5, -96 - Math.random()*3);
 			Starling.juggler.add(this);
 			Starling.juggler.add(_ball);
 		}
 
-		public function resetPositions():void
+		public function resetGame():void
 		{
-			lockTargets = false;
+			Starling.juggler.remove(_ball);
+			setSelectedItem(-1);
 			_isInField =false;
-			_ball.x = 640;
-			_ball.y = 400;
+			_ball.x = _boundsRect.right + 50;
+			_ball.y = _boundsRect.bottom - 10;
 		}
 
-		public function stopGame(targetId:int):void
+		private function stopGame(isWin:Boolean):void
 		{
 			Starling.juggler.remove(this);
-			Starling.juggler.remove(_ball);
-			_onGameOverSignal.dispatch(targetId);
+			_onGameOverSignal.dispatch(isWin);
 		}
 
 		public function createField(rows:int, cols:int):void
@@ -71,7 +82,7 @@ package com.pinball.ui.view.game
 
 			var padding:Number = 35;
 			var startX:Number = (GameStatics.GAME_WIDTH - cols * padding)*0.5;
-			var startY:Number = 100;
+			var startY:Number = 150;
 			var hitRadius:Number = 4;
 			var hitObject:HitObject;
 			_boundsRect = new Rectangle(startX - padding, startY, cols * padding + padding*1.5, rows * padding);
@@ -89,16 +100,6 @@ package com.pinball.ui.view.game
 					_hitObjects.push(hitObject);
 				}
 			}
-
-			/*var borders:Shape = new Shape();
-			borders.graphics.beginFill(0x00FF00);
-			borders.graphics.drawRect(_boundsRect.x,_boundsRect.y,2,_boundsRect.height);
-			borders.graphics.endFill();
-
-			borders.graphics.beginFill(0x00FF00);
-			borders.graphics.drawRect(_boundsRect.right,_boundsRect.y,2,_boundsRect.height);
-			borders.graphics.endFill();
-			addChild(borders);*/
 		}
 
 		public function createTargets(count:int):Vector.<TargetItem>
@@ -111,7 +112,7 @@ package com.pinball.ui.view.game
 			{
 				target = new TargetItem(i,itemWidth, 100);
 				target.x = _boundsRect.x + (itemWidth + padding)*i;
-				target.y = _boundsRect.bottom;
+				target.y = _boundsRect.bottom + 30;
 				addChild(target);
 				_targets.push(target);
 			}
@@ -119,11 +120,29 @@ package com.pinball.ui.view.game
 			return _targets;
 		}
 
-		private function set lockTargets(value:Boolean):void
+		public function setSelectedItem(selectedItemID:int):void
 		{
+			if(selectedItemID >= 0)
+			{
+				var selectedTarget:TargetItem = _targets[selectedItemID];
+				_character.hitArea = selectedTarget.itemBounds;
+				_character.x = selectedTarget.x + (selectedTarget.itemBounds.width - _character.width)*.5;
+				_character.y = selectedTarget.y;
+				_character.visible = true;
+			}
+			else
+			{
+				_character.changState(0);
+				_character.visible = false;
+			}
+
+
 			for(var i:int = 0; i<_targets.length; i++)
 			{
-				_targets[i].touchable = !value;
+				if(selectedItemID == -1)
+					_targets[i].visible = true;
+				else
+					_targets[i].visible = false;
 			}
 		}
 
@@ -138,13 +157,15 @@ package com.pinball.ui.view.game
 
 			if(_ball.y > _boundsRect.bottom)
 			{
-				for(var i:int = 0; i<_targets.length; i++)
+				if(_character.hitArea.contains(_ball.x, _ball.y))
 				{
-					if(_targets[i].itemBounds.contains(_ball.x, _ball.y))
-					{
-						stopGame(_targets[i].id);
-						break;
-					}
+					_character.changState(1);
+					_ball.setVelocity(10, -85 - Math.random()*10);
+					stopGame(true);
+				}
+				else if(_ball.y > stage.stageHeight)
+				{
+					stopGame(false);
 				}
 			}
 		}
@@ -171,7 +192,7 @@ package com.pinball.ui.view.game
 			}
 		}
 
-		public function checkCollision(hitObject:HitObject):void
+		public function checkCollision(hitObject:IHitObject):Boolean
 		{
 			var xx:Number = _ball.x - hitObject.x;
 			var yy:Number = _ball.y - hitObject.y;
@@ -188,7 +209,11 @@ package com.pinball.ui.view.game
 				var resultVector:Point = Vector2dUtils.getBounceVector(new Point(_ball.vx, _ball.vy), dy, -dx, dx, dy);
 				_ball.vx = resultVector.x/1.3;
 				_ball.vy = resultVector.y/1.3;
+
+				return true;
 			}
+
+			return false;
 		}
 
 
@@ -197,11 +222,17 @@ package com.pinball.ui.view.game
 			return _onGameOverSignal;
 		}
 
+		public function setBalance(value:Number):void
+		{
+			_balanceBar.balance = value;
+		}
+
 		override public function destroy():void
 		{
 			_onGameOverSignal.removeAll();
 			super.destroy();
 		}
+
 
 
 	}

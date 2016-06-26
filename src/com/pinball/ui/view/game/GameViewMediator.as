@@ -3,7 +3,10 @@
  */
 package com.pinball.ui.view.game
 {
+	import com.pinball.data.PlayerModel;
 	import com.pinball.ui.controls.TargetItem;
+	import com.pinball.ui.view.result.ResultMessage;
+	import com.pinball.utils.TimeoutUtils;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
@@ -14,8 +17,11 @@ package com.pinball.ui.view.game
 		[Inject]
 		public var view:GameView;
 
+		[Inject]
+		public var playerModel:PlayerModel;
+
 		private var _targets:Vector.<TargetItem>;
-		private var _selectedTargetId:int;
+
 		public function GameViewMediator()
 		{
 			super();
@@ -26,6 +32,8 @@ package com.pinball.ui.view.game
 		{
 			super.initialize();
 
+			playerModel.balance = 100;
+			playerModel.bet = 1;
 			view.createField(10,10);
 
 			_targets = view.createTargets(3);
@@ -34,27 +42,39 @@ package com.pinball.ui.view.game
 				_targets[i].addEventListener(Event.TRIGGERED, onSelectTarget)
 			}
 
+			view.setBalance(playerModel.balance);
+			view.resetGame();
 			view.onGameOverSignal.add(onGameOverHandler);
 		}
 
 		private function onSelectTarget(evt:Event):void
 		{
+			playerModel.balance-=playerModel.bet;
+
 			var selectedItem:TargetItem = _targets[_targets.indexOf(evt.currentTarget)];
-			_selectedTargetId = selectedItem.id;
-			view.startGame();
+			view.setSelectedItem(selectedItem.id);
+			TimeoutUtils.addTimeout(view.startGame, 500);
 		}
 
-		private function onGameOverHandler(targetId:int):void
+		private function onGameOverHandler(isWin:Boolean):void
 		{
-			if(targetId == _selectedTargetId)
-			{
-				trace("You Win");
-			}
+			var resultMessage:ResultMessage = new ResultMessage(isWin);
+			view.addChild(resultMessage);
+
+			if(isWin)
+				playerModel.balance+=playerModel.bet*2;
+
+			view.setBalance(playerModel.balance);
+
+			if(isWin)
+				TimeoutUtils.addTimeout(resetGame, 5000);
 			else
-			{
-				trace("You Lost");
-			}
-			view.resetPositions();
+				TimeoutUtils.addTimeout(resetGame, 2000);
+		}
+
+		private function resetGame():void
+		{
+			view.resetGame();
 		}
 	}
 }

@@ -9,7 +9,6 @@ package com.pinball.core
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
-	import flash.geom.Rectangle;
 
 	import robotlegs.bender.framework.impl.Context;
 	import robotlegs.starling.bundles.mvcs.StarlingBundle;
@@ -18,10 +17,9 @@ package com.pinball.core
 
 	import starling.core.Starling;
 	import starling.events.Event;
-	import starling.utils.RectangleUtil;
-	import starling.utils.ScaleMode;
+	import starling.utils.HAlign;
 
-	[SWF(backgroundColor="#ffffff", frameRate="30", width="800", height="600")]
+	[SWF(backgroundColor="#ffffff", frameRate="30", width="800", height="700")]
 	public class PinPongAppLaunch extends Sprite
 	{
 		private var _context:Context;
@@ -52,7 +50,7 @@ package com.pinball.core
 			_starling.stage.stageHeight = GameStatics.GAME_HEIGHT;
 			_starling.enableErrorChecking = false;
 			_starling.simulateMultitouch = false;
-			_starling.showStats = true;
+			_starling.showStatsAt(HAlign.RIGHT);
 
 			// this event is dispatched when stage3D is set up
 			_starling.addEventListener(Event.ROOT_CREATED, onRootCreated);

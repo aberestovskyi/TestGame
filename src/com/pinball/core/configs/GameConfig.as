@@ -6,6 +6,7 @@ package com.pinball.core.configs
 	import com.pinball.controller.StartupAppCommand;
 	import com.pinball.core.PingPongGameCore;
 	import com.pinball.core.PingPongGameMediator;
+	import com.pinball.data.PlayerModel;
 	import com.pinball.events.GameEvent;
 	import com.pinball.ui.view.AbstractView;
 	import com.pinball.ui.view.game.GameView;
@@ -50,6 +51,9 @@ package com.pinball.core.configs
 			//map views
 			mediatorMap.map(PingPongGameCore).toMediator(PingPongGameMediator);
 			mediatorMap.map(GameView).toMediator(GameViewMediator);
+
+			//map models
+			injector.map(PlayerModel).asSingleton();
 
 
 		}

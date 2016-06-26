@@ -3,7 +3,7 @@
  */
 package com.pinball.controller
 {
-	import com.pinball.core.AppManager;
+	import com.pinball.managers.AppManager;
 	import com.pinball.embed.EmbeddedAssets;
 	import com.pinball.events.GameEvent;
 	import com.pinball.ui.view.game.GameView;
@@ -29,6 +29,7 @@ package com.pinball.controller
 		{
 			super.execute();
 
+			AppManager.getInstance().core = event.data as Sprite;
 			_assetManager = AppManager.getInstance().assetManager;
 			_assetManager.enqueue(EmbeddedAssets);
 			_assetManager.loadQueue(onLoadAssetsProgress);
@@ -38,9 +39,7 @@ package com.pinball.controller
 		{
 			if(progress == 1)
 			{
-				var core:Sprite = event.data as Sprite;
-				var view:GameView = new GameView();
-				core.addChild(view);
+				AppManager.getInstance().viewManager.setView(GameView);
 			}
 		}
 	}

@@ -3,10 +3,13 @@
  */
 package com.pinball.ui.controls
 {
-	import starling.display.Shape;
+	import com.pinball.interfaces.IHitObject;
+	import com.pinball.managers.AppManager;
+
+	import starling.display.Image;
 	import starling.display.Sprite;
 
-	public class HitObject extends Sprite
+	public class HitObject extends Sprite implements IHitObject
 	{
 		private var _radius:Number;
 		public function HitObject(radius:Number)
@@ -14,13 +17,9 @@ package com.pinball.ui.controls
 			super();
 
 			_radius = radius;
-			var shape:Shape = new Shape();
-			shape.graphics.beginFill(0x0000FF);
-			shape.graphics.drawCircle(0,0,_radius);
-			shape.graphics.endFill();
-			addChild(shape);
+			var image:Image = new Image(AppManager.getInstance().assetManager.getTexture("hit_point"));
+			addChild(image);
 		}
-
 
 		public function get radius():Number
 		{

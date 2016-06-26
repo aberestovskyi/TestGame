@@ -3,9 +3,11 @@
  */
 package com.pinball.ui.controls
 {
+	import com.pinball.managers.AppManager;
+
 	import starling.animation.IAnimatable;
 	import starling.core.Starling;
-	import starling.display.Shape;
+	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.utils.deg2rad;
 
@@ -15,16 +17,18 @@ package com.pinball.ui.controls
 		private var _radius:Number;
 		private var _vx:Number = 0;
 		private var _vy:Number = 0;
+		private var _image:Image;
+		private var _newRotation:Number;
 		public function Ball(radius:Number)
 		{
 			super();
 
 			_radius = radius;
-			var shape:Shape = new Shape();
-			shape.graphics.beginFill(0x000000);
-			shape.graphics.drawCircle(0,0,radius);
-			shape.graphics.endFill();
-			addChild(shape);
+			_image = new Image(AppManager.getInstance().assetManager.getTexture("ball"));
+			_image.alignPivot();
+			_image.x = _image.pivotX;
+			_image.y = _image.pivotY;
+			addChild(_image);
 		}
 
 		public function setVelocity(speed:Number, angle:Number):void
@@ -44,6 +48,8 @@ package com.pinball.ui.controls
 
 			x = xx;
 			y = yy;
+			_newRotation = Math.atan2(_vy, _vx) - Math.PI/2;;
+			_image.rotation += (_newRotation - _image.rotation)/10;
 		}
 
 		public function get radius():Number

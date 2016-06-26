@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:a2ee5407d3b460f3551e4399760c16d8:de3ab10d63cea3c3b4407c2ea1d76e47:2d8537cf5cda19c7259361984ed67029$ -->
-<TextureAtlas imagePath="spritesheet.atf" width="128" height="128">
-    <SubTexture name="target_btn" x="1" y="1" width="64" height="64"/>
+<!-- $TexturePacker:SmartUpdate:82ee8a4a27f7a8bb260f6710a1afb038:33a57291c9f86ef5b154f3b209ba6ba7:2d8537cf5cda19c7259361984ed67029$ -->
+<TextureAtlas imagePath="spritesheet.atf" width="256" height="512">
+    <SubTexture name="apple-big" x="1" y="207" rotated="true" width="64" height="63"/>
+    <SubTexture name="ball" x="220" y="115" rotated="true" width="27" height="25"/>
+    <SubTexture name="bg_win_loose" x="1" y="1" width="240" height="112"/>
+    <SubTexture name="char1" x="138" y="197" width="78" height="135" frameX="-13" frameY="0" frameWidth="91" frameHeight="135"/>
+    <SubTexture name="char2" x="1" y="115" rotated="true" width="135" height="90" frameX="-1" frameY="0" frameWidth="91" frameHeight="135"/>
+    <SubTexture name="hit_point" x="243" y="1" width="8" height="8"/>
+    <SubTexture name="target_btn" x="138" y="115" width="80" height="80"/>
 </TextureAtlas>
