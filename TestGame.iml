@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="Flex" version="4">
+  <component name="FlexBuildConfigurationManager" active="TestGame">
+    <configurations>
+      <configuration name="TestGame" main-class="com.pinball.core.PinPongAppLaunch" output-file="pinpong.swf" output-folder="$MODULE_DIR$/bin">
+        <dependencies target-player="18.0" component-set="MxOnly">
+          <entries>
+            <entry library-id="8340ece3-ce1f-43c6-bc4c-9650184887ec">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flex_sdk_4.6_air_18" />
+        </dependencies>
+        <compiler-options>
+          <option name="additionalOptions" value="-static-link-runtime-shared-libraries=true" />
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+    </configurations>
+    <compiler-options />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="flex_sdk_4.6_air_18" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="8340ece3-ce1f-43c6-bc4c-9650184887ec" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
+      </library>
+    </orderEntry>
+  </component>
+</module>
