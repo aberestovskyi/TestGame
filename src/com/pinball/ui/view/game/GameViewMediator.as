@@ -23,7 +23,16 @@ package com.pinball.ui.view.game
 			super.initialize();
 
 			view.createField(10,10);
-			setTimeout(view.start, 1000);
+			view.createTargets(3);
+
+			view.onGameOverSignal.add(onGameOverHandler);
+			setTimeout(view.startGame, 1000);
+		}
+
+		private function onGameOverHandler(targetId:int):void
+		{
+			view.resetPositions();
+			setTimeout(view.startGame, 1000);
 		}
 	}
 }

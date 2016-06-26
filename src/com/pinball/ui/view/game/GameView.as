@@ -6,11 +6,14 @@ package com.pinball.ui.view.game
 	import com.pinball.data.GameStatics;
 	import com.pinball.ui.controls.Ball;
 	import com.pinball.ui.controls.HitObject;
+	import com.pinball.ui.controls.TargetItem;
 	import com.pinball.ui.view.AbstractView;
 	import com.pinball.utils.Vector2dUtils;
 
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+
+	import org.osflash.signals.Signal;
 
 	import starling.animation.IAnimatable;
 	import starling.core.Starling;
@@ -18,9 +21,12 @@ package com.pinball.ui.view.game
 	public class GameView extends AbstractView implements IAnimatable
 	{
 		private var _hitObjects:Vector.<HitObject>;
+		private var _targets:Vector.<TargetItem>;
 		private var _ball:Ball;
 		private var _boundsRect:Rectangle;
 		private var _isInField:Boolean;
+
+		private var _onGameOverSignal:Signal = new Signal(int);
 		public function GameView()
 		{
 			super();
@@ -32,19 +38,29 @@ package com.pinball.ui.view.game
 			super.complete();
 
 			_ball = new Ball(10);
-			_ball.x = 640;
-			_ball.y = 400;
 			addChild(_ball);
+			resetPositions();
 		}
 
-		public function start():void
+		public function startGame():void
+		{
+			_ball.setVelocity(25 + Math.random()*5, -97 - Math.random()*3);
+			Starling.juggler.add(this);
+			Starling.juggler.add(_ball);
+		}
+
+		public function resetPositions():void
 		{
 			_isInField =false;
 			_ball.x = 640;
 			_ball.y = 400;
-			_ball.setVelocity(25 + Math.random()*5, -97 - Math.random()*3);
-			Starling.juggler.add(this);
-			Starling.juggler.add(_ball);
+		}
+
+		public function stopGame(targetId:int):void
+		{
+			Starling.juggler.remove(this);
+			Starling.juggler.remove(_ball);
+			_onGameOverSignal.dispatch(targetId);
 		}
 
 		public function createField(rows:int, cols:int):void
@@ -56,8 +72,8 @@ package com.pinball.ui.view.game
 			var startY:Number = 100;
 			var hitRadius:Number = 4;
 			var hitObject:HitObject;
-			_boundsRect = new Rectangle(startX - padding/2, startY, cols * padding + padding/2, rows * padding);
-			trace(_boundsRect);
+			_boundsRect = new Rectangle(startX - padding, startY, cols * padding + padding*2, rows * padding);
+
 			for(var i:int = 0; i<rows; i++)
 			{
 				for(var j:int = 0; j<cols; j++)
@@ -71,8 +87,22 @@ package com.pinball.ui.view.game
 					_hitObjects.push(hitObject);
 				}
 			}
+		}
 
-
+		public function createTargets(count:int):void
+		{
+			_targets = new Vector.<TargetItem>();
+			var target:TargetItem;
+			var padding:Number = 10;
+			var itemWidth:Number = (_boundsRect.width/count) - (padding * (count-1));
+			for(var i:int = 0; i<count; i++)
+			{
+				target = new TargetItem(i,itemWidth, 100);
+				target.x = _boundsRect.x + (itemWidth + padding)*i + padding;
+				target.y = _boundsRect.bottom;
+				addChild(target);
+				_targets.push(target);
+			}
 		}
 
 		public function advanceTime(time:Number):void
@@ -83,6 +113,18 @@ package com.pinball.ui.view.game
 			}
 
 			checkBallForBorders();
+
+			if(_ball.y > _boundsRect.bottom)
+			{
+				for(var i:int = 0; i<_targets.length; i++)
+				{
+					if(_targets[i].itemBounds.contains(_ball.x, _ball.y))
+					{
+						stopGame(_targets[i].id);
+						break;
+					}
+				}
+			}
 		}
 
 		private function checkBallForBorders():void
@@ -122,9 +164,23 @@ package com.pinball.ui.view.game
 				_ball.y += diff * dy;
 
 				var resultVector:Point = Vector2dUtils.getBounceVector(new Point(_ball.vx, _ball.vy), dy, -dx, dx, dy);
-				_ball.vx = resultVector.x/1.5;
-				_ball.vy = resultVector.y/1.5;
+				_ball.vx = resultVector.x/1.3;
+				_ball.vy = resultVector.y/1.3;
 			}
 		}
+
+
+		public function get onGameOverSignal():Signal
+		{
+			return _onGameOverSignal;
+		}
+
+		override public function destroy():void
+		{
+			_onGameOverSignal.removeAll();
+			super.destroy();
+		}
+
+
 	}
 }

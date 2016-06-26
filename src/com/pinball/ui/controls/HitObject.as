@@ -15,7 +15,7 @@ package com.pinball.ui.controls
 
 			_radius = radius;
 			var shape:Shape = new Shape();
-			shape.graphics.beginFill(0x000000);
+			shape.graphics.beginFill(0x0000FF);
 			shape.graphics.drawCircle(0,0,_radius);
 			shape.graphics.endFill();
 			addChild(shape);
