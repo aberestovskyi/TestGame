@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PinPongAppLaunch.as" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/pinball/core/PinPongAppLaunch.as">
+      <file leaf-file-name="PinBallAppLaunch.as" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/pinball/core/PinBallAppLaunch.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.11169514">
-              <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.44678056">
+              <caret line="22" column="48" selection-start-line="22" selection-start-column="48" selection-end-line="22" selection-end-column="48" />
               <folding>
                 <element signature="e#72#115#0" expanded="true" />
               </folding>
@@ -94,6 +94,9 @@
         <option value="$PROJECT_DIR$/src/com/pinball/ui/view/result/ResultMessage.as" />
         <option value="$PROJECT_DIR$/src/com/pinball/ui/view/game/GameView.as" />
         <option value="$PROJECT_DIR$/src/com/pinball/embed/EmbeddedAssets.as" />
+        <option value="$PROJECT_DIR$/src/com/pinball/core/PinBallAppLaunch.as" />
+        <option value="$PROJECT_DIR$/src/com/pinball/core/PingBallGameCore.as" />
+        <option value="$PROJECT_DIR$/src/com/pinball/core/PingBallGameMediator.as" />
       </list>
     </option>
   </component>
@@ -429,7 +432,7 @@
   <component name="PropertiesComponent">
     <property name="recentsLimit" value="5" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../MySlots/MobileSlots" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/bin/index.html" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -636,11 +639,11 @@
       <option name="fastPackaging" value="true" />
       <option name="fullScreenHeight" value="0" />
       <option name="fullScreenWidth" value="0" />
-      <option name="launchUrl" value="false" />
+      <option name="launchUrl" value="true" />
       <option name="launcherParameters">
         <LauncherParameters>
-          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
-          <option name="launcherType" value="Player" />
+          <option name="browser" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+          <option name="launcherType" value="Browser" />
           <option name="newPlayerInstance" value="false" />
           <option name="playerPath" value="D:/flex_sdk_4.6_air_18/flashplayer_18_sa_debug.exe" />
         </LauncherParameters>
@@ -654,7 +657,7 @@
       <option name="screenDpi" value="0" />
       <option name="screenHeight" value="0" />
       <option name="screenWidth" value="0" />
-      <option name="url" value="http://" />
+      <option name="url" value="$PROJECT_DIR$/bin/index.html" />
       <option name="usbDebugPort" value="7936" />
       <method />
     </configuration>
@@ -682,12 +685,12 @@
       <option name="number" value="Default" />
       <updated>1466850233962</updated>
       <workItem from="1466850238411" duration="24330000" />
-      <workItem from="1466932578475" duration="17944000" />
+      <workItem from="1466932578475" duration="18461000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42274000" />
+    <option name="totallyTimeSpent" value="42791000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -778,7 +781,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pinball/core/PinPongAppLaunch.as">
+    <entry file="file://$PROJECT_DIR$/src/com/pinball/core/PinBallAppLaunch.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="51" column="66" selection-start-line="51" selection-start-column="66" selection-end-line="51" selection-end-column="66" />
@@ -926,14 +929,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pinball/core/PingPongGameMediator.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="46" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="46" />
           <folding />
         </state>
       </provider>
@@ -1146,18 +1141,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pinball/core/PingPongGameCore.as">
+    <entry file="file://$PROJECT_DIR$/src/com/pinball/core/PingBallGameMediator.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+          <caret line="9" column="37" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pinball/core/PinPongAppLaunch.as">
+    <entry file="file://$PROJECT_DIR$/src/com/pinball/core/PingBallGameCore.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.11169514">
-          <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
+          <caret line="7" column="33" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/pinball/core/PinBallAppLaunch.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44678056">
+          <caret line="22" column="48" selection-start-line="22" selection-start-column="48" selection-end-line="22" selection-end-column="48" />
           <folding>
             <element signature="e#72#115#0" expanded="true" />
           </folding>

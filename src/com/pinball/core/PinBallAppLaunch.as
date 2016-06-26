@@ -20,11 +20,11 @@ package com.pinball.core
 	import starling.utils.HAlign;
 
 	[SWF(backgroundColor="#ffffff", frameRate="30", width="800", height="700")]
-	public class PinPongAppLaunch extends Sprite
+	public class PinBallAppLaunch extends Sprite
 	{
 		private var _context:Context;
 		private var _starling:Starling;
-		public function PinPongAppLaunch()
+		public function PinBallAppLaunch()
 		{
 			if(stage)
 				init();
@@ -45,7 +45,7 @@ package com.pinball.core
 			GameStatics.GAME_WIDTH = stage.stageWidth;
 			GameStatics.GAME_HEIGHT = stage.stageHeight;
 
-			_starling = new Starling(PingPongGameCore, stage);
+			_starling = new Starling(PingBallGameCore, stage);
 			_starling.stage.stageWidth  = GameStatics.GAME_WIDTH;
 			_starling.stage.stageHeight = GameStatics.GAME_HEIGHT;
 			_starling.enableErrorChecking = false;

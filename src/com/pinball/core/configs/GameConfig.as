@@ -4,8 +4,8 @@
 package com.pinball.core.configs
 {
 	import com.pinball.controller.StartupAppCommand;
-	import com.pinball.core.PingPongGameCore;
-	import com.pinball.core.PingPongGameMediator;
+	import com.pinball.core.PingBallGameCore;
+	import com.pinball.core.PingBallGameMediator;
 	import com.pinball.data.PlayerModel;
 	import com.pinball.events.GameEvent;
 	import com.pinball.ui.view.AbstractView;
@@ -49,7 +49,7 @@ package com.pinball.core.configs
 			commandMap.map(GameEvent.STARTUP, GameEvent).toCommand(StartupAppCommand).once();
 
 			//map views
-			mediatorMap.map(PingPongGameCore).toMediator(PingPongGameMediator);
+			mediatorMap.map(PingBallGameCore).toMediator(PingBallGameMediator);
 			mediatorMap.map(GameView).toMediator(GameViewMediator);
 
 			//map models

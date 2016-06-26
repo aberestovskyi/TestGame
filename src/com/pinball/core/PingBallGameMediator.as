@@ -7,12 +7,12 @@ package com.pinball.core
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
-	public class PingPongGameMediator extends Mediator
+	public class PingBallGameMediator extends Mediator
 	{
 		[Inject]
-		public var view:PingPongGameCore;
+		public var view:PingBallGameCore;
 
-		public function PingPongGameMediator()
+		public function PingBallGameMediator()
 		{
 			super();
 		}

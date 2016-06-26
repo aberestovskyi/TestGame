@@ -2,7 +2,7 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="TestGame">
     <configurations>
-      <configuration name="TestGame" main-class="com.pinball.core.PinPongAppLaunch" output-file="pinpong.swf" output-folder="$MODULE_DIR$/bin">
+      <configuration name="TestGame" main-class="com.pinball.core.PinBallAppLaunch" output-file="pinball.swf" output-folder="$MODULE_DIR$/bin">
         <dependencies target-player="18.0" component-set="MxOnly">
           <entries>
             <entry library-id="8340ece3-ce1f-43c6-bc4c-9650184887ec">

@@ -5,9 +5,9 @@ package com.pinball.core
 {
 	import starling.display.Sprite;
 
-	public class PingPongGameCore extends Sprite
+	public class PingBallGameCore extends Sprite
 	{
-		public function PingPongGameCore()
+		public function PingBallGameCore()
 		{
 			super();
 		}
