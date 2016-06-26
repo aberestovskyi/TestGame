@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:a2ee5407d3b460f3551e4399760c16d8:de3ab10d63cea3c3b4407c2ea1d76e47:2d8537cf5cda19c7259361984ed67029$ -->
+<TextureAtlas imagePath="spritesheet.atf" width="128" height="128">
+    <SubTexture name="target_btn" x="1" y="1" width="64" height="64"/>
+</TextureAtlas>

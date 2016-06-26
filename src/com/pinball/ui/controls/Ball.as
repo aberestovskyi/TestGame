@@ -7,6 +7,7 @@ package com.pinball.ui.controls
 	import starling.core.Starling;
 	import starling.display.Shape;
 	import starling.display.Sprite;
+	import starling.utils.deg2rad;
 
 	public class Ball extends Sprite implements IAnimatable
 	{
@@ -29,8 +30,8 @@ package com.pinball.ui.controls
 		public function setVelocity(speed:Number, angle:Number):void
 		{
 			_maxSpeed = speed;
-			_vx = speed*Math.cos(angle*Math.PI/180);
-			_vy = speed*Math.sin(angle*Math.PI/180);
+			_vx = speed*Math.cos(deg2rad(angle));
+			_vy = speed*Math.sin(deg2rad(angle));
 		}
 
 		public function advanceTime(time:Number):void

@@ -44,6 +44,7 @@ package com.pinball.ui.view.game
 
 		public function startGame():void
 		{
+			lockTargets = true;
 			_ball.setVelocity(25 + Math.random()*5, -97 - Math.random()*3);
 			Starling.juggler.add(this);
 			Starling.juggler.add(_ball);
@@ -51,6 +52,7 @@ package com.pinball.ui.view.game
 
 		public function resetPositions():void
 		{
+			lockTargets = false;
 			_isInField =false;
 			_ball.x = 640;
 			_ball.y = 400;
@@ -72,7 +74,7 @@ package com.pinball.ui.view.game
 			var startY:Number = 100;
 			var hitRadius:Number = 4;
 			var hitObject:HitObject;
-			_boundsRect = new Rectangle(startX - padding, startY, cols * padding + padding*2, rows * padding);
+			_boundsRect = new Rectangle(startX - padding, startY, cols * padding + padding*1.5, rows * padding);
 
 			for(var i:int = 0; i<rows; i++)
 			{
@@ -87,21 +89,41 @@ package com.pinball.ui.view.game
 					_hitObjects.push(hitObject);
 				}
 			}
+
+			/*var borders:Shape = new Shape();
+			borders.graphics.beginFill(0x00FF00);
+			borders.graphics.drawRect(_boundsRect.x,_boundsRect.y,2,_boundsRect.height);
+			borders.graphics.endFill();
+
+			borders.graphics.beginFill(0x00FF00);
+			borders.graphics.drawRect(_boundsRect.right,_boundsRect.y,2,_boundsRect.height);
+			borders.graphics.endFill();
+			addChild(borders);*/
 		}
 
-		public function createTargets(count:int):void
+		public function createTargets(count:int):Vector.<TargetItem>
 		{
 			_targets = new Vector.<TargetItem>();
 			var target:TargetItem;
 			var padding:Number = 10;
-			var itemWidth:Number = (_boundsRect.width/count) - (padding * (count-1));
+			var itemWidth:Number = (_boundsRect.width - (padding*(count-1)))/count;
 			for(var i:int = 0; i<count; i++)
 			{
 				target = new TargetItem(i,itemWidth, 100);
-				target.x = _boundsRect.x + (itemWidth + padding)*i + padding;
+				target.x = _boundsRect.x + (itemWidth + padding)*i;
 				target.y = _boundsRect.bottom;
 				addChild(target);
 				_targets.push(target);
+			}
+
+			return _targets;
+		}
+
+		private function set lockTargets(value:Boolean):void
+		{
+			for(var i:int = 0; i<_targets.length; i++)
+			{
+				_targets[i].touchable = !value;
 			}
 		}
 
